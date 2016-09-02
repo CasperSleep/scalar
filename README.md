@@ -4,11 +4,11 @@ What is scalar? It is a thin, performant library for measurement conversions.
 
 ## Alternatives
 
-[Measured](https://github.com/Shopify/measured)
-[RubyMeasurement](https://github.com/mhuggins/ruby-measurement)
+- [Measured](https://github.com/Shopify/measured)
+- [RubyMeasurement](https://github.com/mhuggins/ruby-measurement)
 
 ## Why Scalar?
-Because it is crazy fast:
+- Because it is crazy fast:
 ```
 pry(main)> Benchmark.ips do |r|
 pry(main)*   r.report("scalar") { Scalar::Weight.ounces(5).pounds }
@@ -25,12 +25,12 @@ Calculating -------------------------------------
                  r-m     28.409k (± 4.3%) i/s -    143.052k in   5.044956s
 ```
 
-Because it uses a nice method based interface.
+- Because it uses a nice method based interface.
 `Scalar::Weight.grams(5).kilograms.scalar == 0.005`
 
 ## Why not Scalar?
-Because you are parsing weights from string input.
-Because you need the accuracy of BigDecimal.
+- Because you are parsing weights from string input.
+- Because you need the accuracy of BigDecimal.
 
 ## Installation
 
@@ -53,10 +53,12 @@ Or install it yourself as:
 ### Current measurement types:
 Scalar::Weight
 - grams, kilograms, pounds, ounces
+
 `require 'scalar/weight'`
 
 Scalar::Length
 - millimeters, meters, inches, feet
+
 `require 'scalar/length'`
 
 ### Creating a new measurement object
@@ -79,8 +81,11 @@ Scalar::Weight.pounds(1) > Scalar::Weight.ounces(1)
 
 ### Making a new unit type for an existing measurement type
 Find base unit:
+
 `Scalar::Weight::CONVERSIONS.base_unit`
+
 Find the conversion ratio online between the new unit and the base unit and add it with the following:
+
 ```
 Scalar::Weight::CONVERSIONS.add name: :metric_tons, base_units_per: 1_000_000
 Scalar::Weight::CONVERSIONS.add name: :stone, base_units_per: 6350.29
