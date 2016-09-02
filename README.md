@@ -51,15 +51,11 @@ Or install it yourself as:
 ## Usage
 
 ### Current measurement types:
-Scalar::Weight
+Scalar::Weight `require 'scalar/weight'`
 - grams, kilograms, pounds, ounces
 
-`require 'scalar/weight'`
-
-Scalar::Length
-- millimeters, meters, inches, feet
-
-`require 'scalar/length'`
+Scalar::Length `require 'scalar/length'`
+- millimeters, meters, kilometers, inches, feet, yards, miles
 
 ### Creating a new measurement object
 `Scalar::Weight.grams(5) #=> <Scalar::Weight @scalar=5 @unit=:grams>`
@@ -85,7 +81,6 @@ Find base unit:
 `Scalar::Weight::CONVERSIONS.base_unit`
 
 Find the conversion ratio online between the new unit and the base unit and add it with the following:
-
 ```
 Scalar::Weight::CONVERSIONS.add name: :metric_tons, base_units_per: 1_000_000
 Scalar::Weight::CONVERSIONS.add name: :stone, base_units_per: 6350.29
