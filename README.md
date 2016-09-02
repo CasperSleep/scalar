@@ -1,4 +1,5 @@
 # Scalar
+[![Build Status](https://travis-ci.org/CasperSleep/scalar.svg?branch=master)](https://travis-ci.org/CasperSleep/scalar)
 
 What is scalar? It is a thin, performant library for measurement conversions.
 
