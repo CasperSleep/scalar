@@ -7,23 +7,23 @@ What is scalar? It is a thin, performant library for measurement conversions.
 
 - [Measured](https://github.com/Shopify/measured)
 - [RubyMeasurement](https://github.com/mhuggins/ruby-measurement)
+- [Ruby Units](https://github.com/olbrich/ruby-units)
 
 ## Why Scalar?
 - Because it is crazy fast:
 ```
-pry(main)> Benchmark.ips do |r|
-pry(main)*   r.report("scalar") { Scalar::Weight.ounces(5).pounds }
-pry(main)*   r.report ('measured') { Measured::Weight.new(5, :oz).convert_to(:lb) }
-pry(main)*   r.report('r-m') { Measurement.parse("5 oz").convert_to(:lb) }
-pry(main)* end
-Warming up --------------------------------------
-              scalar    54.968k i/100ms
-            measured   983.000  i/100ms
-                 r-m     2.751k i/100ms
+Benchmark.ips do |r|
+  r.report("scalar") { Scalar::Weight.pounds(1) == Scalar::Weight.grams(1) }
+  r.report("measured") { Measured::Weight.new(1, :lb) == Measured::Weight.new(1, :g) }
+  r.report("r-measurement") { Measurement.parse("1 lb") == Measurement.parse("1 g") }
+  r.report("ruby-unit") { Unit.new("1 lb") == Unit.new("1 g") }
+end
+
 Calculating -------------------------------------
-              scalar    661.515k (± 3.6%) i/s -      3.353M in   5.075379s
-            measured     10.087k (± 3.1%) i/s -     51.116k in   5.072332s
-                 r-m     28.409k (± 4.3%) i/s -    143.052k in   5.044956s
+              scalar    459.099k (± 1.1%) i/s -      2.299M in   5.007574s
+            measured     15.573k (±17.0%) i/s -     75.900k in   5.035022s
+       r-measurement     21.154k (± 1.8%) i/s -    105.850k in   5.005499s
+           ruby-unit      2.630k (± 1.5%) i/s -     13.150k in   5.002066s
 ```
 
 - Because it uses a nice method based interface.
