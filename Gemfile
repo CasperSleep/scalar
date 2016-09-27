@@ -8,4 +8,5 @@ gem "benchmark-ips"
 gem "measured"
 gem "ruby-measurement"
 gem "ruby-units"
+gem "quantified"
 =end
