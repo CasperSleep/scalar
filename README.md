@@ -3,6 +3,11 @@
 
 What is scalar? It is a thin, performant library for measurement conversions.
 
+## Table of Contents
+1. [Installation](#installation)
+2. [Usage](#usage)
+3. [Developmant](#development)
+
 ## Alternatives
 
 - [Measured](https://github.com/Shopify/measured)
