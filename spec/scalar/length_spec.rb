@@ -59,6 +59,11 @@ RSpec.describe Scalar::Length do
     it { is_expected.to be_a(described_class) }
   end
 
+  describe '.centimeters' do
+    subject { described_class.centimeters(0) }
+    it { is_expected.to be_a(described_class) }
+  end
+
   describe '.millimeters' do
     subject { described_class.millimeters(0) }
     it { is_expected.to be_a(described_class) }
@@ -96,6 +101,10 @@ RSpec.describe Scalar::Length do
         expect(described_class.feet(0)).to eq(described_class.kilometers(0))
       end
 
+      it 'equals 0 centimeters' do
+        expect(described_class.feet(0)).to eq(described_class.centimeters(0))
+      end
+
       it 'equals 0 millimeters' do
         expect(described_class.feet(0)).to eq(described_class.millimeters(0))
       end
@@ -113,6 +122,11 @@ RSpec.describe Scalar::Length do
       it 'equals 0.3048 meters' do
         expect(described_class.feet(1))
           .to be_within(0.00001).percent_of(described_class.meters(0.3048))
+      end
+
+      it 'equals 30.48 centimeters' do
+        expect(described_class.feet(1))
+          .to be_within(0.00001).percent_of(described_class.centimeters(30.48))
       end
 
       it 'equals 0.0003048 kilometers' do
