@@ -83,6 +83,13 @@ RSpec.describe Scalar::Length do
     end
   end
 
+  describe '#to_r' do
+    it 'returns the scalar' do
+      w = described_class.inches(5)
+      expect(w.to_r).to eql w.scalar
+    end
+  end
+
   describe '.feet' do
     subject { described_class.feet(0) }
     it { is_expected.to be_a(described_class) }

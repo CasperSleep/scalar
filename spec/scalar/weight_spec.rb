@@ -83,6 +83,13 @@ RSpec.describe Scalar::Weight do
     end
   end
 
+  describe '#to_r' do
+    it 'returns the scalar' do
+      w = described_class.pounds(5)
+      expect(w.to_r).to eql w.scalar
+    end
+  end
+
   describe '.pounds' do
     subject { described_class.pounds(0) }
     it { is_expected.to be_a(described_class) }

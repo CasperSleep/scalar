@@ -87,6 +87,7 @@ module Scalar
 
       attr_reader :scalar
       alias abs scalar
+      alias to_r scalar
 
       protected
       attr_reader :unit
