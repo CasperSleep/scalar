@@ -21,6 +21,11 @@ RSpec.describe Scalar::Length do
       expect(w1 + w2).to eq(described_class.feet(3))
     end
 
+    it 'allows adding a 0' do
+      w = described_class.meters(1)
+      expect(w + 0).to eq(w)
+    end
+
     it 'raises TypeError if adding a non-weight' do
       obj = Object.new
       error_msg="#{obj.class} can't be coerced into #{described_class}"
@@ -32,6 +37,11 @@ RSpec.describe Scalar::Length do
     it 'substracts two lengths' do
       w1, w2 = described_class.meters(2), described_class.centimeters(50)
       expect(w1 - w2).to eq(described_class.meters(1.5))
+    end
+
+    it 'allows substracting a 0' do
+      w = described_class.meters(1)
+      expect(w - 0).to eq(w)
     end
 
     it 'raises TypeError if substracting a non-length' do

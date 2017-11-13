@@ -21,6 +21,11 @@ RSpec.describe Scalar::Weight do
       expect(w1 + w2).to eq(described_class.pounds(3))
     end
 
+    it 'allows adding neutral element' do
+      w = described_class.pounds(1)
+      expect(w + 0).to eq(w)
+    end
+
     it 'raises TypeError if adding a non-weight' do
       obj = Object.new
       error_msg="#{obj.class} can't be coerced into #{described_class}"
@@ -32,6 +37,11 @@ RSpec.describe Scalar::Weight do
     it 'subtracts two weights' do
       w1, w2 = described_class.kilograms(2), described_class.grams(1500)
       expect(w1 - w2).to eq(described_class.kilograms(0.5))
+    end
+
+    it 'allows substracting neutral element' do
+      w = described_class.pounds(1)
+      expect(w - 0).to eq(w)
     end
 
     it 'raises TypeError if substracting a non-weight' do

@@ -42,6 +42,7 @@ module Scalar
       end
 
       def -(other)
+        other = self.class.send(unit, 0) if other == 0
         if !other.is_a?(self.class)
           raise TypeError, "#{other.class} can't be coerced into #{self.class}"
         end
@@ -50,6 +51,7 @@ module Scalar
       end
 
       def +(other)
+        other = self.class.send(unit, 0) if other == 0
         if !other.is_a?(self.class)
           raise TypeError, "#{other.class} can't be coerced into #{self.class}"
         end
