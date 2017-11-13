@@ -57,6 +57,22 @@ module Scalar
         self.class.send(unit, scalar + other.send(unit).scalar)
       end
 
+      def *(other)
+        if !other.is_a?(Numeric)
+          raise TypeError, "#{other.class} can't be coerced into #{scalar.class}"
+        end
+
+        self.class.send(unit, scalar * other)
+      end
+
+      def /(other)
+        if !other.is_a?(Numeric)
+          raise TypeError, "#{other.class} can't be coerced into #{scalar.class}"
+        end
+
+        self.class.send(unit, scalar / other)
+      end
+
       def initialize(scalar, unit)
         self.scalar = scalar.to_r
         self.unit = unit

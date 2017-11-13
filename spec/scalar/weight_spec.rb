@@ -41,6 +41,32 @@ RSpec.describe Scalar::Weight do
     end
   end
 
+  describe '#*' do
+    it 'multiplies a weight by a scalar' do
+      w = described_class.grams(500)
+      expect(w * 2).to eq(described_class.kilograms(1))
+    end
+
+    it 'raises TypeError if multiplying by a non-weight' do
+      obj = described_class.pounds(1)
+      error_msg="#{obj.class} can't be coerced into Rational"
+      expect{described_class.pounds(1) * obj}.to raise_error(TypeError, error_msg)
+    end
+  end
+
+  describe '#/' do
+    it 'multiplies a weight by a scalar' do
+      w = described_class.grams(1500)
+      expect(w / 2).to eq(described_class.kilograms(0.75))
+    end
+
+    it 'raises TypeError if deviding by a non-weight' do
+      obj = described_class.pounds(1)
+      error_msg="#{obj.class} can't be coerced into Rational"
+      expect{described_class.pounds(1) / obj}.to raise_error(TypeError, error_msg)
+    end
+  end
+
   describe '#scalar' do
     it 'returns the unitless numeric amount' do
       expect(described_class.pounds(5).scalar).to eq(5)
