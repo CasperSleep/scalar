@@ -2,6 +2,8 @@ module Scalar
   module SupportClasses
     module Measurement
       include Comparable
+      extend Forwardable
+      def_delegators :scalar, :to_f, :to_i
 
       module ClassMethods
         def alias_map=(alias_map)

@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'scalar/length'
 
 RSpec.describe Scalar::Length do
@@ -88,6 +89,16 @@ RSpec.describe Scalar::Length do
       w = described_class.inches(5)
       expect(w.to_r).to eql w.scalar
     end
+  end
+
+  describe '#to_f' do
+    subject { described_class.inches(4) }
+    it_behaves_like 'delegates to #scalar', :to_f
+  end
+
+  describe '#to_i' do
+    subject { described_class.inches(4) }
+    it_behaves_like 'delegates to #scalar', :to_i
   end
 
   describe '.feet' do

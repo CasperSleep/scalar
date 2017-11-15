@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'scalar/weight'
 
 RSpec.describe Scalar::Weight do
@@ -88,6 +89,16 @@ RSpec.describe Scalar::Weight do
       w = described_class.pounds(5)
       expect(w.to_r).to eql w.scalar
     end
+  end
+
+  describe '#to_f' do
+    subject { described_class.pounds(4) }
+    it_behaves_like 'delegates to #scalar', :to_f
+  end
+
+  describe '#to_i' do
+    subject { described_class.pounds(4) }
+    it_behaves_like 'delegates to #scalar', :to_i
   end
 
   describe '.pounds' do
