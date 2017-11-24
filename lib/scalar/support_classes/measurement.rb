@@ -2,6 +2,8 @@ module Scalar
   module SupportClasses
     module Measurement
       include Comparable
+      extend Forwardable
+      def_delegators :scalar, :to_f, :to_i
 
       module ClassMethods
         def alias_map=(alias_map)
@@ -42,6 +44,7 @@ module Scalar
       end
 
       def -(other)
+        other = self.class.send(unit, 0) if other == 0
         if !other.is_a?(self.class)
           raise TypeError, "#{other.class} can't be coerced into #{self.class}"
         end
@@ -50,11 +53,28 @@ module Scalar
       end
 
       def +(other)
+        other = self.class.send(unit, 0) if other == 0
         if !other.is_a?(self.class)
           raise TypeError, "#{other.class} can't be coerced into #{self.class}"
         end
 
         self.class.send(unit, scalar + other.send(unit).scalar)
+      end
+
+      def *(other)
+        if !other.is_a?(Numeric)
+          raise TypeError, "#{other.class} can't be coerced into #{scalar.class}"
+        end
+
+        self.class.send(unit, scalar * other)
+      end
+
+      def /(other)
+        if !other.is_a?(Numeric)
+          raise TypeError, "#{other.class} can't be coerced into #{scalar.class}"
+        end
+
+        self.class.send(unit, scalar / other)
       end
 
       def initialize(scalar, unit)
@@ -69,6 +89,7 @@ module Scalar
 
       attr_reader :scalar
       alias abs scalar
+      alias to_r scalar
 
       protected
       attr_reader :unit

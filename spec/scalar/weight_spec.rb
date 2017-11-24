@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'scalar/weight'
 
 RSpec.describe Scalar::Weight do
@@ -21,6 +22,11 @@ RSpec.describe Scalar::Weight do
       expect(w1 + w2).to eq(described_class.pounds(3))
     end
 
+    it 'allows adding neutral element' do
+      w = described_class.pounds(1)
+      expect(w + 0).to eq(w)
+    end
+
     it 'raises TypeError if adding a non-weight' do
       obj = Object.new
       error_msg="#{obj.class} can't be coerced into #{described_class}"
@@ -28,10 +34,71 @@ RSpec.describe Scalar::Weight do
     end
   end
 
+  describe '#-' do
+    it 'subtracts two weights' do
+      w1, w2 = described_class.kilograms(2), described_class.grams(1500)
+      expect(w1 - w2).to eq(described_class.kilograms(0.5))
+    end
+
+    it 'allows substracting neutral element' do
+      w = described_class.pounds(1)
+      expect(w - 0).to eq(w)
+    end
+
+    it 'raises TypeError if substracting a non-weight' do
+      obj = Object.new
+      error_msg="#{obj.class} can't be coerced into #{described_class}"
+      expect{described_class.pounds(1) - obj}.to raise_error(TypeError, error_msg)
+    end
+  end
+
+  describe '#*' do
+    it 'multiplies a weight by a scalar' do
+      w = described_class.grams(500)
+      expect(w * 2).to eq(described_class.kilograms(1))
+    end
+
+    it 'raises TypeError if multiplying by a non-weight' do
+      obj = described_class.pounds(1)
+      error_msg="#{obj.class} can't be coerced into Rational"
+      expect{described_class.pounds(1) * obj}.to raise_error(TypeError, error_msg)
+    end
+  end
+
+  describe '#/' do
+    it 'multiplies a weight by a scalar' do
+      w = described_class.grams(1500)
+      expect(w / 2).to eq(described_class.kilograms(0.75))
+    end
+
+    it 'raises TypeError if deviding by a non-weight' do
+      obj = described_class.pounds(1)
+      error_msg="#{obj.class} can't be coerced into Rational"
+      expect{described_class.pounds(1) / obj}.to raise_error(TypeError, error_msg)
+    end
+  end
+
   describe '#scalar' do
     it 'returns the unitless numeric amount' do
       expect(described_class.pounds(5).scalar).to eq(5)
     end
+  end
+
+  describe '#to_r' do
+    it 'returns the scalar' do
+      w = described_class.pounds(5)
+      expect(w.to_r).to eql w.scalar
+    end
+  end
+
+  describe '#to_f' do
+    subject { described_class.pounds(4) }
+    it_behaves_like 'delegates to #scalar', :to_f
+  end
+
+  describe '#to_i' do
+    subject { described_class.pounds(4) }
+    it_behaves_like 'delegates to #scalar', :to_i
   end
 
   describe '.pounds' do
